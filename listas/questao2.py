@@ -42,7 +42,9 @@ class ContatoUI:
         email = input("Informe o e-mail: ")
         fone = input("Informe o phone: ")
         c = Contato(id, nome, email, fone)
-        cls.__contatos.append(c)
+        if email in c:
+            print("Email já cadastrado. Digite novamente")
+        else: cls.__contatos.append(c)
 
     @classmethod
     def listar(cls):
@@ -51,6 +53,7 @@ class ContatoUI:
 
     @classmethod
     def atualizar(cls):
+        cls.listar()
         nome = input("Informe o nome do contato que deseja atualizar: ")
         for c in cls.__contatos:
             if c.get_nome() == nome:
@@ -61,15 +64,17 @@ class ContatoUI:
                 c.set_email(email2)
                 c.set_fone(fone2)
                 print("Contato atualizado")
+            else: print("Contato inexistente") 
 
     @classmethod
     def excluir(cls):
+        cls.listar()
         nome = input("Informe o nome do contato que deseja excluir: ")
         for c in cls.__contatos:
             if c.get_nome() == nome:
                 cls.__contatos.remove(c)
                 print("Contato excluido")
-
+            else: print("Contato inexistente") 
 
     @classmethod
     def pesquisar(cls):
