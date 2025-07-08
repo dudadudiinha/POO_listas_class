@@ -42,7 +42,7 @@ class ContatoUI:
         nome = input("Informe o nome: ")
         email = input("Informe o e-mail: ")
         fone = input("Informe o fone: ")
-        nasc = input("Informe a data de nascimento: ")
+        nasc = input("Informe a data de nascimento (dd/mm/aaaa): ")
         for c in cls.__contatos:
             if c.get_email() == email:
                 print("Email já cadastrado. Digite novamente")
@@ -76,8 +76,9 @@ class ContatoUI:
             nome = input("Informe o novo nome: ")
             email = input("Informe o novo e-mail: ")
             fone = input("Informe o novo fone: ")
+            nasc = input("Informe a nova data de nascimento (dd/mm/aaaa): ")
             cls.__contatos.remove(c)
-            c = Contato(id, nome, email, fone)
+            c = Contato(id, nome, email, fone, nasc)
             cls.__contatos.append(c)
 
     @classmethod
@@ -96,8 +97,10 @@ class ContatoUI:
                 print(c)
     
     def aniversariantes(cls):
-        nascimento = input("Informe o mês para ver os aniversariantes: ")
+        mes = input("Informe o mês para ver os aniversariantes: ")
         for c in cls.__contatos:
-            if c.get_nasc() == 
+            if c.get_nasc()[3:5] == mes:
+                print(c)
+        
 
 ContatoUI.main()
