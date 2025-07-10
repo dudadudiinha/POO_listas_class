@@ -6,6 +6,11 @@ class Contato:
         self.__email = e
         self.__fone = f
         self.__nasc = b
+        self.set_nasc(self.__nasc)
+    def set_nasc(self, b):
+        if b > datetime.today(): 
+            raise ValueError("A data de nascimento é inválida")
+        self.__nasc = b
     def get_nasc(self):
         return self.__nasc
     def get_id(self):
@@ -15,7 +20,7 @@ class Contato:
     def get_nome(self):
         return self.__nome    
     def __str__(self):
-        return f"{self.__id} - {self.__nome} - {self.__email} - {self.__fone}"
+        return f"{self.__id} - {self.__nome} - {self.__email} - {self.__fone} - {self.__nasc.strftime("%d/%m/%Y")}"
         
 class ContatoUI:
     __contatos = []
@@ -42,7 +47,7 @@ class ContatoUI:
         nome = input("Informe o nome: ")
         email = input("Informe o e-mail: ")
         fone = input("Informe o fone: ")
-        nasc = input("Informe a data de nascimento (dd/mm/aaaa): ")
+        nasc = datetime.strptime(input("Informe a data de nascimento (dd/mm/aaaa): "), "%d/%m/%Y") #strf é pra transformar uma data em str
         for c in cls.__contatos:
             if c.get_email() == email:
                 print("Email já cadastrado. Digite novamente")
@@ -71,12 +76,13 @@ class ContatoUI:
         cls.listar()
         id = int(input("Informe o id do contato a ser atualizado: "))
         c = cls.listar_id(id)
-        if c == None: print("Esse contato não existe")
+        if c == None: 
+            print("Esse contato não existe")
         else:
             nome = input("Informe o novo nome: ")
             email = input("Informe o novo e-mail: ")
             fone = input("Informe o novo fone: ")
-            nasc = input("Informe a nova data de nascimento (dd/mm/aaaa): ")
+            nasc = datetime.strptime(input("Informe a data de nascimento (dd/mm/aaaa): "), "%d/%m/%Y")
             cls.__contatos.remove(c)
             c = Contato(id, nome, email, fone, nasc)
             cls.__contatos.append(c)
@@ -86,8 +92,10 @@ class ContatoUI:
         cls.listar()
         id = int(input("Informe o id do contato a ser excluído: "))
         c = cls.listar_id(id)
-        if c == None: print("Esse contato não existe")
-        else: cls.__contatos.remove(c)
+        if c == None: 
+            print("Esse contato não existe")
+        else: 
+            cls.__contatos.remove(c)
 
     @classmethod
     def pesquisar(cls):
@@ -95,12 +103,16 @@ class ContatoUI:
         for c in cls.__contatos:
             if c.get_nome().startswith(nome):
                 print(c)
-    
+
+    @classmethod
     def aniversariantes(cls):
-        mes = input("Informe o mês para ver os aniversariantes: ")
+        mes = int(input("Informe o mês para ver os aniversariantes: "))
+        achou = False
         for c in cls.__contatos:
-            if c.get_nasc()[3:5] == mes:
+            if c.get_nasc().month == mes:
                 print(c)
-        
+                achou = True
+        if achou == False:
+            print("Não há nenhum contato que faz aniversário nesse mês")
 
 ContatoUI.main()
