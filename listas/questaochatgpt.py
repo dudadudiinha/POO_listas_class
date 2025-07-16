@@ -100,6 +100,6 @@ class LivroUI:
         for l in cls.__livros[1:]:
             if antigo.get_data_leitura() > l.get_data_leitura():
                 antigo = l
-        print(f"O mais antigo é {antigo}")
+        print(f"{antigo}")
 
 LivroUI.menu()
