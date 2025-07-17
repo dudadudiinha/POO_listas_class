@@ -97,8 +97,8 @@ class TreinoUI:
                 t.set_data(data)
                 t.set_distancia(distancia)
                 t.set_tempo(tempo)
-        else:
-            print("Treino não encontrado.")
+                return
+        print("Treino não encontrado.")
 
     @classmethod
     def excluir(cls):
