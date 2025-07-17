@@ -2,10 +2,10 @@ from datetime import datetime
 
 class Livro:
     def __init__(self, id, titulo, autor, data_leitura):
-        self.__id = id
-        self.__titulo = titulo
-        self.__autor = autor
-        self.__data_leitura = data_leitura
+        self.set_id(id)
+        self.set_titulo(titulo)
+        self.set_autor(autor)
+        self.set_data_leitura(data_leitura)
     def set_id(self, id):
         if id < 0: raise ValueError("ID inválido.")
         self.__id = id
